@@ -23,7 +23,7 @@ let g:vimtex_quickfix_mode=0
 let g:vimtex_complete_enabled=1
 set conceallevel=2
 let g:tex_conceal="abdgm"
-let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -bibtex -file-line-error -syntex=1 -interaction=nonstopmode'
+"let g:vimtex_latexmk_options = '-pdf -shell-escape -verbose -bibtex -file-line-error -syntex=1 -interaction=nonstopmode'
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_view_general_options = '--noraise --unique file:@pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
@@ -80,18 +80,15 @@ function! SwitchLayout()
 endfunction!
 
 function! ToggleLangMap()
-  let l:mathmode = vimtex#util#in_mathzone()
-  let l:mathtext = vimtex#util#in_syntax('texMathText')
+  "let l:mathmode = vimtex#util#in_mathzone()
+  let l:mathmode = vimtex#syntax#in_mathzone()
+  "let l:mathtext = vimtex#util#in_syntax('texMathText')
   let g:lay = libcall(g:XkbSwitchLib, 'Xkb_Switch_getXkbLayout', '')
 
   if mode()=='i'
     if l:mathmode == 1 
       call RememberLayout()
-      if l:mathtext == 0
-        call Layout('us')
-      elseif l:mathtext == 1
-        call SwitchLayout()
-      endif
+      call Layout('us')
     else   
       call SwitchLayout()
     endif
